@@ -7,8 +7,8 @@ const RockPaperScissors = () => {
   const [computerChoice, setComputerChoice] = useState ("");
   const [iWins, setIWins] = useState(0)
   const [youWins, setYouWin] = useState(0)
-  const [youD, setYouD] = useState({})
-  const [compD, setCompD] = useState({})
+  const [youD, setYouD] = useState("")
+  const [compD, setCompD] = useState("")
 
 //working//
   const headerTaunt = [
@@ -21,15 +21,17 @@ const RockPaperScissors = () => {
   const randomTaunt = headerTaunt[Math.floor(Math.random()*headerTaunt.length)];
 
     //WHAT I WANT TO HAPPEN//
-  // set users choice on click //
-  // then get and set computer's choice//
-  // console.log both //
+  // set users choice on click //  WORKING
+  // then get and set computer's choice// WORKING
+  // console.log both //  WORKING
   // have both display icon in cards below //
-  // compare choices to declare winner //
+  // maybe highlight active choice or something as well //
+  // compare choices to declare winner // WORKING
   // record wins of each for score card//
 
   const clickHandler = (click) => {
     setChoice(click)
+    setYouD(click)
     getComputerChoice()
   }
 
@@ -37,7 +39,6 @@ const RockPaperScissors = () => {
   let computerChoices = ["rock", "paper", "scissors"];
   let randomComputerChoice = computerChoices[Math.floor(Math.random()*computerChoices.length)];
   setComputerChoice(randomComputerChoice)
-  // computerDisplay(computerChoice)
   }  
 
   const whoWon = (choice, computerChoice) => {
@@ -78,47 +79,36 @@ const RockPaperScissors = () => {
   }
 
   const makeItHappen = () => {
+    setCompD(computerChoice)
     whoWon(choice, computerChoice)
   }
 
   const display = [
-  {id: 1, icon: <Icon size="huge" name="hand rock" color="orange"/>},
-  {id: 2, icon: <Icon size="huge" name="hand paper" color="purple"/>},
-  {id: 3, icon: <Icon size="huge" name="hand paper" color="teal"/>}
+    "rock",
+    "paper",
+    "scissors"
   ]
 
-  // const userDisplay = (choice) => {
-  //   if (choice === "rock")
-  //     setYouD(display[0])
-  //     return (
-  //       {display.icon}
-  //     )
-  //   elseif(choice === "paper")
-  //     setYouD(display[1])
 
-  //   if (choice === "scissors")
-  //   setYouD(display[2])
-  // }
+  const userDisplay = (click) => {
+    if (click === "rock")
+    //  setYouD(display[0])
+      return (
+        <Icon size="huge" name="hand rock" color="orange"/>
+      )
 
-  // const computerDisplay = (computerChoice) => {
-  //   if (choice === "rock")
-  //     return (
-  //       <Icon size="huge" name="hand rock" color="orange"/>
-  //     )
+    if (click === "paper") 
+    // setYouD(display[1])
+      return (
+        <Icon size="huge" name="hand paper" color="purple"/>
+      )
 
-  //   if (choice === "paper")
-  //     return (
-  //       <Icon size="huge" name="hand paper" color="purple"/>
-  //     )
-
-  //   if (choice === "scissors")
-  //     return (
-  //       <Icon size="huge" name="hand paper" color="teal"/>
-  //     )
-  // }
-
-  //trying to get display to work, want it to hold computer and user choices in 
-
+    if (click === "scissors")
+    // setYouD(display[2])
+      return (
+        <Icon size="huge" name="hand paper" color="teal"/>
+      )
+  }
 
 
 
@@ -158,14 +148,14 @@ return (
     <Card>
       <Card.Header> You </Card.Header>
       <Card.Content>
-        {/* {userDisplay}  */}
+        <Icon size="huge" name={`hand ${youD}`} />
       </Card.Content>
     </Card>
 
     <Card>
     <Card.Header> Me </Card.Header>
     <Card.Content>
-        {/* {computerDisplay} */}
+      <Icon size="huge" name={`hand ${compD}`} />
     </Card.Content>
     </Card>
     </Organize>
@@ -176,9 +166,10 @@ return (
 }
 
 const Organize = styled.div`
+margin: 60px;
 display: flex;
 flex-direction: row;
-justify-content: center;
+justify-content: default;
 `;
 
 // const StyledCard = styled(card)`
